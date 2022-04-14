@@ -1,24 +1,46 @@
-import logo from './logo.svg';
+import { useEffect, useState} from 'react';
+import { Row, Col, Container } from 'react-bootstrap'
+
+import StudentCard from './StudentCard';
 import './App.css';
 
-function App() {
+import axios from 'axios'
+
+
+const App = () => {
+  
+  const [students, setStudents] = useState([])
+  
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await axios.get("https://api.hatchways.io/assessment/students")
+        console.log(res.data.students)
+        setStudents(res.data.students)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    getData()
+    
+  }, [])
+
+  if(!students) return <h3>Loading...</h3>
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Row xl={1} className="mx-auto">
+
+        {students.map((student) => {
+
+          return (
+
+            <Col key={student.id}>
+              <StudentCard student={student}/>
+             </Col>  
+           )
+        })}
+      </Row>
+    </Container>
   );
 }
 

@@ -1,8 +1,10 @@
 import { useEffect, useState} from 'react';
 import { Row, Col, Container } from 'react-bootstrap'
 
+
+//components
 import StudentCard from './StudentCard';
-import './App.css';
+import Search from './Search'
 
 import axios from 'axios'
 
@@ -27,8 +29,9 @@ const App = () => {
 
   if(!students) return <h3>Loading...</h3>
   return (
-    <Container>
-      <Row xl={1} className="mx-auto">
+    <div className='mx-4'>
+      <Search />
+      <Row xs={1} className="mx-auto">
 
         {students.map((student) => {
 
@@ -40,7 +43,7 @@ const App = () => {
            )
         })}
       </Row>
-    </Container>
+    </div>
   );
 }
 

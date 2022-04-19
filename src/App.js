@@ -1,9 +1,14 @@
 import { useEffect, useState} from 'react';
-import { Row, Col } from 'react-bootstrap'
+
 
 
 //components
-import StudentCard from './StudentCard';
+import Search from './Search';
+
+
+
+//css
+import './App.css'
 
 
 import axios from 'axios'
@@ -24,55 +29,13 @@ const App = () => {
       }
     }
     getData()
-    
   }, [])
-
-//Search Bar
- const [searchStudent, setSearchStudent] = useState("")
-  const [filteredStudent, setFilteredStudent] = useState([])
-
-  const searchInput = (searchValue) => {
-    setSearchStudent(searchValue)
-    if(searchStudent !== ''){
-        console.log(searchValue)
-        const findStudent = students.filter((student) => {
-          return Object.values(student).join('').toLowerCase().includes(searchStudent.toLowerCase())
-        })
-        setFilteredStudent(findStudent)
-      console.log(findStudent)
-    } else (
-      setFilteredStudent(students)
-    )
-  }
 
 
   if(!students) return <h3>Loading...</h3>
   return (
     <div className='mx-4'>
-        <div class="mb-3 ">
-          <label htmlFor="search" className="form-label"></label>
-          <input onChange={(e) => searchInput(e.target.value)} type="text" className="form-control" id="searchBar" placeholder="Find By Name" />
-        </div>
-      <Row xs={1} className="mx-auto">
-        {searchStudent.length > 1 ? (
-          filteredStudent.map((student) => {
-            return (
-              <Col key={student.id}>
-              <StudentCard student={student}/>
-             </Col>  
-            )
-          })
-        ) : (
-            students.map((student) => {
-              return (
-                <Col key={student.id}>
-                <StudentCard student={student}/>
-                </Col>  
-            )
-        })
-          )
-        }
-      </Row>
+      <Search students={students}/>
     </div>
   );
 }

@@ -4,10 +4,12 @@ import { Card, Button } from 'react-bootstrap'
 import NewTag from './NewTag'
 
 const StudentCard = ({ student }) => {
+
   
-  function showGrades() {
-    let showAllGrades = document.getElementById('allGrades')
-     
+  
+    function showGrades() {
+    let showAllGrades = document.getElementById(`allGrades-${student.id}`)
+    
     if (showAllGrades.style.display === '' || showAllGrades.style.display === 'none') {
       showAllGrades.style.display = 'inline-block'
     } else {
@@ -24,7 +26,7 @@ const StudentCard = ({ student }) => {
         <Card.Body>
           <Card.Title as='h1'><strong>{student.firstName + ` ` + student.lastName}</strong></Card.Title>
               <span style={{float:'right'}}>
-                <Button onClick={(e) => showGrades(e.target.id)} type='button' style={{background:'none', border:'none'}}>
+                <Button onClick={(e) => showGrades(e.target.index)} type='button' style={{background:'none', border:'none'}}>
                 <i className='fa fa-plus' style={{fontSize:'24px', color:'#b2b2b2'}}></i>       
                 </Button>
               </span>
@@ -32,7 +34,7 @@ const StudentCard = ({ student }) => {
           <Card.Text className="ps-4" as='p'>Company: {student.company}</Card.Text>
           <Card.Text className="ps-4" as='p'>Skill: {student.skill}</Card.Text>
           <Card.Text className="ps-4" as='p'>Average: {student.grades.reduce((a, b) => a + parseFloat(b), 0) / student.grades.length}</Card.Text>
-            <div id='allGrades' style={{paddingLeft:'1.5rem', display:'none'}}>
+            <div id={`allGrades-${student.id}`} style={{paddingLeft:'1.5rem', display:'none'}}>
                       {student.grades.map((grade, index) => {
                         return (
                     <>
